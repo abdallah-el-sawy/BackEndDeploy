@@ -6,18 +6,19 @@ const articleRouter = require("./Routes/articleRoute");
 
 const PORT = process.env.PORT || 3000;
 
-
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.send("Backend is working!");
+});
+
 mongoose
-  .connect(
-    "mongodb+srv://abdallahelsawy706_db_user:mongo12345@rest.wumseou.mongodb.net/?appName=rest",
-  )
+  .connect(process.env.MONGO_URI)
   .then(() => {
-    console.log("connected Successfully");
+    console.log("MongoDB connected successfully");
   })
-  .catch((e) => {
-    console.log("Error", e);
+  .catch((error) => {
+    console.log("MongoDB Error:", error.message);
   });
 
 app.use(articleRouter);
